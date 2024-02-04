@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMH</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* Estilos Generales */
+        body {
+            font-family: Arial, sans-serif; /* Establece la fuente para toda la página */
+            margin: 0; /* Elimina el margen predeterminado */
+            padding: 0; /* Elimina el relleno predeterminado */
+        }
+
+        /* Estilos de la Barra de Navegación */
+        ul {
+            list-style-type: none; /* Elimina los puntos de la lista */
+            margin: 0; /* Elimina el margen */
+            padding: 0; /* Elimina el relleno */
+            background-color: white; /* Color de fondo para la barra de navegación */
+            overflow: hidden; /* Oculta el contenido que se desborda */
+            width: 100%; /* Ancho completo */
+            height: 100px; /* Establece la altura de la barra de navegación */
+            display: flex; /* Usa flexbox para el diseño */
+            align-items: center; /* Centra los elementos verticalmente */
+            justify-content: flex-end; /* Alinea los elementos al final del contenedor flex */
+            position: fixed; /* Posición fija para la barra de navegación */
+            top: 0; /* Se mantiene en la parte superior */
+            z-index: 1000; /* Z-index para el orden de apilamiento */
+            transition: height 0.3s; /* Transición suave para cambios de altura */
+        }
+
+        ul.scrolled {
+            height: 80px; /* Altura ajustada al desplazarse */
+        }
+
+        li {
+            display: inline-block; /* Muestra los elementos de la lista en línea (horizontalmente) */
+            margin-left: 15px; /* Agrega espacio entre los elementos de la lista */
+        }
+
+        li.logo {
+            margin-right: auto; /* Empuja el logo hacia la derecha */
+            padding-left: 16px; /* Agrega relleno a la izquierda del logo */
+        }
+
+        li.logo img {
+            height: auto; /* Mantiene la relación de aspecto del logo */
+            max-height: 100px; /* Establece la altura máxima para el logo */
+            transition: max-height 0.5s ease-in-out; /* Transición suave para cambios en la altura del logo */
+        }
+
+        li a {
+            display: block; /* Muestra los enlaces como bloques para darles estilo */
+            color: black; /* Establece el color del texto del enlace */
+            text-align: left; /* Alinea el texto del enlace a la izquierda */
+            padding: 20px 16px; /* Agrega relleno a los enlaces */
+            text-decoration: none; /* Elimina el subrayado predeterminado del enlace */
+            border-bottom: 3px solid white; /* Agrega un borde inferior blanco inicialmente */
+        }
+
+        li a:hover {
+            border-bottom: 2px solid green; /* Cambia el color del borde al pasar el ratón */
+        }
+
+        body {
+            margin-top: 100px; /* Agrega espacio en la parte superior del cuerpo */
+        }
+
+        /* Estilos de la Barra Verde */
+        .green-bar {
+            background-color: green; /* Establece el color de fondo para la barra verde */
+            color: white; /* Establece el color del texto */
+            padding: 10px; /* Agrega relleno a la barra verde */
+            text-align: center; /* Centra el texto dentro de la barra verde */
+            overflow: hidden; /* Oculta el contenido que se desborda */
+        }
+
+        /* Estilos del Contenedor de la Imagen */
+        .image-container {
+            width: 100%; /* Ancho completo */
+            height: 90vh; /* Establece la altura al 70% de la altura de la ventana */
+            overflow: hidden; /* Oculta el contenido que se desborda */
+            position: relative; /* Establece la posición relativa para los elementos secundarios */
+        }
+
+        .styled-image {
+            width: 100%; /* Ancho completo para la imagen estilizada */
+            height: 100%; /* Altura completa para la imagen estilizada */
+            object-fit: cover; /* Mantiene la relación de aspecto y cubre el contenedor */
+            filter: brightness(90%); /* Ajusta la luminosidad de la imagen */
+            animation: zoom 8s infinite alternate; /* Aplica animación de zoom */
+        }
+
+        /* Estilos del Texto Informativo */
+        .infotext {
+            text-align: center; /* Centra el texto dentro del contenedor de texto informativo */
+            padding: 20px; /* Agrega relleno al contenedor de texto informativo */
+            background-color: rgba(255, 255, 255, 0.9); /* Establece el color de fondo con transparencia alfa */
+            border-radius: 10px; /* Agrega un radio de borde para esquinas redondeadas */
+            margin-top: 5px; /* Agrega espacio en la parte superior */
+            max-width: 600px; /* Establece el ancho máximo para el contenedor de texto informativo */
+            margin-left: auto; /* Centra el contenedor al ajustar los márgenes izquierdo y derecho */
+            margin-right: auto;
+        }
+
+        h4 {
+            color: #333; /* Establece el color para el encabezado */
+            margin-bottom: 20px; /* Agrega espacio en la parte inferior del encabezado */
+        }
+
+        .infotext p {
+            width: 100%; /* Ancho completo para los párrafos dentro del contenedor de texto informativo */
+            color: #555; /* Establece el color para el texto */
+            text-align: center; /* Centra el texto dentro de los párrafos */
+        }
+
+        .contenedor_servicio {
+            text-align: center; /* Centra el texto dentro del contenedor de servicios */
+            margin-top: 20px; /* Agrega espacio en la parte superior */
+        }
+
+        /* Estilos de las Cajas de Información */
+        .info-boxes {
+            display: flex; /* Usa flexbox para el diseño */
+            justify-content: space-around; /* Distribuye el espacio uniformemente entre las cajas de información */
+        }
+
+        .info-box {
+            width: 20%; /* Establece el ancho para las cajas de información individuales */
+            background-color: #f0f0f0; /* Establece el color de fondo */
+            padding: 55px; /* Agrega relleno a la caja de información */
+            border-radius: 1px; /* Agrega un radio de borde para esquinas redondeadas */
+            text-align: center; /* Centra el texto dentro de la caja de información */
+            margin: 0 50px 50px 50px; /* Agrega márgenes para posicionar las cajas de información */
+        }
+
+        .info-box h3 {
+            color: #333; /* Establece el color para el encabezado dentro de las cajas de información */
+            margin-bottom: 10px; /* Agrega espacio en la parte inferior del encabezado */
+        }
+
+        .info-box img {
+            max-width: 90%; /* Establece el ancho máximo para las imágenes dentro de las cajas de información */
+            border-radius: 10%; /* Agrega un radio de borde para esquinas redondeadas */
+            margin-bottom: 10px; /* Agrega espacio en la parte inferior de la imagen */
+        }
+
+        .info-box p {
+            color: #555; /* Establece el color para el texto dentro de las cajas de información */
+        }
+
+        /* Estilos para los Botones */
+        button {
+            padding: 10px 20px; /* Agrega relleno a los botones */
+            background-color: green; /* Establece el color de fondo para los botones */
+            color: #fff; /* Establece el color del texto */
+            border: none; /* Elimina el borde predeterminado del botón */
+            border-radius: 2px; /* Agrega un radio de borde para esquinas redondeadas */
+            cursor: pointer; /* Establece el cursor a pointer al pasar el ratón */
+            transition: background-color 0.3s; /* Transición suave para cambios en el color de fondo */
+        }
+
+        button:hover {
+            background-color: black; /* Cambia el color de fondo al pasar el ratón */
+        }
+
+        button:active {
+            background-color: darkgreen; /* Cambia el color de fondo en el estado activo */
+        }
+
+        /* Animación de Keyframes */
+        @keyframes zoom {
+            0% {
+                transform: scale(1); /* Valor de escala inicial */
+            }
+            100% {
+                transform: scale(1.1); /* Valor de escala final */
+            }
+        }
+
+        /* Estilos del Pie de Página */
+        footer {
+            background-color: #333; /* Establece el color de fondo para el pie de página */
+            color: white; /* Establece el color del texto */
+            padding: 10px; /* Agrega relleno al pie de página */
+            text-align: center; /* Centra el texto dentro del pie de página */
+        }
+
+        /*--------------------------------------------------------------------------------*/
+        .contenedor_quien {
+            text-align: center; /* Centra el texto dentro del contenedor de servicios */
+            margin-top: 20px; /* Agrega espacio en la parte superior */
+        }
+        .info-quien {
+            display: flex; /* Usa flexbox para el diseño */
+            justify-content: space-around; /* Distribuye el espacio uniformemente entre las cajas de información */
+        }
+
+        .info-boxquien {
+            width: 20%; /* Establece el ancho para las cajas de información individuales */
+            background-color: white; /* Establece el color de fondo */
+            text-align: center; /* Centra el texto dentro de la caja de información */
+            margin: 0 50px 50px 50px; /* Agrega márgenes para posicionar las cajas de información */
+        }
+        .fa-solid{
+            font-size: 70px;
+        }
+        /* Estilos para el contenedor de h3, p y el formulario */
+#contact-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 50px; /* Ajusta el margen superior según sea necesario */
+}
+
+/* Estilos para el formulario */
+form {
+    background-color: #fff;
+    padding: 10px;
+    width: 500px;
+    margin: 0;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+input[type="submit"] {
+    background-color: green;
+    color: #fff;
+    cursor: pointer;
+    width: 120px;
+}
+
+/* Estilos para el último h3 y p */
+#contact-info {
+    max-width: 400px; /* Ajusta el ancho máximo según sea necesario */
+    margin-right: 160px;
+}
+
+#contact-info h3 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+#contact-info p {
+    color: #555;
+}
+
+    </style>
+</head>
+<body>
+    <ul id="navbar" class="mobile-menu" >
+        <li class="logo">
+            <img id="logoImage" src="img/emhh.jpg" alt="Logo" height="120">
+        </li>
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#servicio">Servicios</a></li>
+        <li><a href="#quienes-somos">¿Quiénes somos?</a></li>
+        <li><a href="#acerca-de">Acerca de</a></li>
+        <li><a href="#contact-section">Contacto</a></li>
+    </ul>
+
+    <div class="green-bar" >
+ 
+        • CONTADOR PÚBLICO • DESPACHO CONTABLE • ASESORÍA CONTABLE • ASESORÍA FISCAL • ADMINISTRACIÓN DE NÓMINAS • FIRMAS DE CONTADORES 
+
+    </div>
+
+      <!-- Contenido HTML -->
+  <div class="image-container" id="inicio">
+    <img src="img/c.jpeg" alt="Mi Imagen" class="styled-image">
+  </div>
+
+
+
+  <div id="servicio" class="contenedor_servicio">
+    <h1>Tenemos un plan de contabilidad para cada cliente</h1>
+
+    <!-- Cajas de información -->
+    <div class="info-boxes">
+      <div class="info-box">
+        <h3>Emprendedores</h3>
+        <img src="img/jj.png" alt="Emprendedores">
+        <p>Nuestros paquetes contables flexibles y económicos te ayudan a mantener tus finanzas bajo control, para que puedas enfocarte en lo que realmente importa: crecer tu negocio</p>
+        <button>Información</button>
+      </div>
+
+      <div class="info-box">
+        <h3>Empresas medianas</h3>
+        <img src="img/jj.png" alt="Empresas Medianas">
+        <p>Nos adaptamos a tus necesidades cambiantes, ofreciendo soluciones contables que te ayudan a cumplir con las regulaciones y a optimizar tus recursos financieros.</p>
+        <button>Información</button>
+      </div>
+
+      <div class="info-box">
+        <h3>Empresas Grandes</h3>
+        <img src="img/jj.png" alt="Empresas Grandes">
+        <p>Servicios de contabilidad para personas morales de alta calidad que se ajustan a la complejidad de tu empresa, garantizando cumplimiento y eficiencia financiera.</p>
+        <button>Información</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="infotext">
+    <h1>¿Quiénes somos?</h1>
+    <p>Despacho Gamboa Hernández, S.C.P. surge por inquietud del C.P. José Mateo Gamboa Cab, quien decide establecer la propia desde 2003 después de haber prestado sus servicios durante 10 años en otra firma de contadores.</p>
+  </div>
+
+  <div id="quienes-somos" class="contenedor_quien">
+
+
+    <!-- Cajas de información -->
+    <div class="info-quien">
+      <div class="info-boxquien">
+        <h3>Misión</h3>
+        <i class="fa-solid fa-pen-to-square"></i>
+
+        <p>
+            Generar confianza y valores mediante los servicios profesionales que brindamos a nuestros clientes.</p>
+      </div>
+
+      <div class="info-boxquien">
+        <h3>Visión</h3>
+        <i class="fa-solid fa-eye"></i>
+
+        <p>Ser no solo prestadores de servicios si no convertirnos en socios estratégicos de nuestros clientes.</p>       
+      </div>
+
+      <div class="info-boxquien">
+        <h3>Valores</h3>
+        <i class="fa-solid fa-book"></i>
+        <p>Integridad, Liderazgo, Responsabilidad, Honestidad, Confianza, Trabajo en equipo, Compromiso.</p>        
+      </div>
+    </div>
+
+
+  <div id="acerca-de"> 
+  <h2 style="text-align: center;">Actualmente nos encontramos en</h2>
+
+  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2946.163731663227!2d-89.75511986662328!3d20.888130693819477!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f5613893016c7b3%3A0xeebb0109d672426c!2sEMH%20DESPACHO%20CONTABLE!5e1!3m2!1ses!2smx!4v1707010491153!5m2!1ses!2smx" width="1500" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+  </div>
+
+  <div>
+
+    <h1>
+        Puede contactarnos 
+    </h1>
+
+    <div id="contact-section">
+    <form action="#" method="post">
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" name="nombre" required>
+
+        <label for="email">Correo Electrónico</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="mensaje">Mensaje</label>
+        <textarea id="mensaje" name="mensaje" rows="4" required></textarea>
+
+        <input type="submit" value="Enviar">
+    </form>
+
+    <div id="contact-info">
+    <h2>
+        Horarios de atención
+    </h2>
+    <i class="fa-solid fa-calendar-days"></i>
+
+    <h3>
+        Lunes a Viernes: 9am – 6pm
+        Sábados: Cerrado
+        Domingo: Cerrado
+    </h3>
+</div>
+
+</div>
+
+  </div>
+
+    
+
+
+
+
+
+
+  <footer>
+    <p>&copy; 2024 Mi Sitio Web. Todos los derechos reservados.</p>
+</footer>
+
+    <script>
+        window.addEventListener("scroll", function() {
+            var navbar = document.getElementById("navbar");
+            var logoImg = document.getElementById("logoImage");
+            
+            if (window.scrollY > 0) {
+                navbar.classList.add("scrolled");
+                logoImg.style.maxHeight = "60px";
+            } else {
+                navbar.classList.remove("scrolled");
+                logoImg.style.maxHeight = "120px";
+            }
+        });
+    </script>
+</body>
+</html>
