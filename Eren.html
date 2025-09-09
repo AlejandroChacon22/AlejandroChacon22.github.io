@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>¿Puede cantar Fuentes de Ortiz otra vez, por favor?</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&family=Sacramento&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg1:#0ea5ea; /* sky blue */
+      --bg2:#7c3aed; /* violet */
+      --glass-bg: rgba(255,255,255,.14);
+      --glass-stroke: rgba(255,255,255,.35);
+      --text:#0b1021;
+      --accent:#ffe27a;
+      --white:#ffffff;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;}
+    body{
+      margin:0;
+      font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,sans-serif;
+      color:var(--white);
+      background: linear-gradient(120deg,var(--bg1),var(--bg2));
+      background-size: 200% 200%;
+      animation: gradientShift 12s ease-in-out infinite;
+      overflow-x:hidden;
+    }
+    @keyframes gradientShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+
+    /* Floating music notes */
+    .notes{
+      position:fixed; inset:0; pointer-events:none; overflow:hidden;
+    }
+    .note{
+      position:absolute; bottom:-10vh; font-size:clamp(18px,2.4vw,34px);
+      opacity:.0; filter: drop-shadow(0 6px 12px rgba(0,0,0,.2));
+      animation: floatUp var(--dur) linear var(--delay) infinite;
+    }
+    @keyframes floatUp{0%{transform:translateY(0) translateX(0) rotate(0deg);opacity:0}10%{opacity:.9} 90%{opacity:.9}100%{transform:translateY(-120vh) translateX(var(--x)) rotate(360deg);opacity:0}}
+
+    /* Center card */
+    .wrap{
+      display:grid; place-items:center; min-height:100dvh; padding: 8vmin 4vmin; position:relative;
+    }
+    .card{
+      width:min(920px, 92vw);
+      background: linear-gradient(175deg, var(--glass-bg), rgba(255,255,255,.06));
+      border:1px solid var(--glass-stroke);
+      border-radius:28px; backdrop-filter: blur(12px) saturate(120%);
+      box-shadow: 0 20px 60px rgba(8,10,37,.28);
+      padding: clamp(22px, 6vmin, 48px);
+      text-align:center;
+    }
+    .eyebrow{
+      display:inline-flex; align-items:center; gap:.6ch; padding:.45rem .8rem; border-radius:999px;
+      background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.24);
+      font-size:.92rem; letter-spacing:.02em; margin-bottom:1rem;
+    }
+    .eyebrow .dot{width:.55rem; height:.55rem; background:var(--accent); border-radius:50%; box-shadow:0 0 0 6px rgba(255,226,122,.16)}
+
+    h1{
+      font-weight:800; line-height:1.04;
+      font-size:clamp(28px, 6.4vw, 64px);
+      margin: .1rem 0 .8rem;
+      text-transform:uppercase;
+      text-shadow:0 6px 18px rgba(0,0,0,.25);
+    }
+    .sub{
+      font-weight:400; opacity:.92; font-size:clamp(16px, 2.4vw, 22px);
+      margin:0 auto 1.4rem; max-width: 40ch;
+    }
+    .script{
+      font-family:"Sacramento", cursive; font-size: clamp(26px, 6vw, 52px); color: var(--accent);
+      text-shadow:0 10px 24px rgba(0,0,0,.25);
+      margin-top:.4rem;
+    }
+
+    .cta{
+      display:inline-grid; place-items:center; gap:.35rem; cursor:pointer;
+      border:none; padding:.95rem 1.4rem; border-radius:16px;
+      background: radial-gradient(90% 180% at 10% 10%, #fff, #f7f3d8);
+      color:#111; font-weight:700; font-size:1.05rem;
+      box-shadow: 0 12px 30px rgba(0,0,0,.25), inset 0 -6px 16px rgba(0,0,0,.08);
+      transition: transform .12s ease, box-shadow .2s ease;
+    }
+    .cta:hover{ transform: translateY(-2px) scale(1.02); box-shadow: 0 18px 36px rgba(0,0,0,.32), inset 0 -10px 20px rgba(0,0,0,.08)}
+    .cta:active{ transform: translateY(0) scale(.995)}
+    .cta small{opacity:.7; font-weight:500}
+
+    .pillrow{display:flex; justify-content:center; flex-wrap:wrap; gap:.6rem; margin: 1.25rem 0 0}
+    .pill{font-size:.92rem; padding:.5rem .9rem; border-radius:999px; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.25)}
+
+    /* Confetti */
+    .confetti{ position:fixed; inset:0; pointer-events:none; overflow:hidden; }
+    .confetti span{ position:absolute; width:10px; height:16px; opacity:0; transform: translateY(-120vh) rotate(0deg);
+      animation: drop var(--d) linear var(--dl) forwards; border-radius:2px;}
+    @keyframes drop{0%{opacity:0; transform: translateY(-120vh) rotate(0)}10%{opacity:1}100%{transform: translateY(120vh) rotate(720deg); opacity:0}}
+
+    footer{position:fixed; bottom:12px; left:50%; transform:translateX(-50%); font-size:.86rem; opacity:.8}
+
+    /* Accessibility */
+    @media (prefers-reduced-motion: reduce){
+      *{animation: none !important; transition: none !important}
+    }
+  </style>
+</head>
+<body>
+  <!-- Floating music notes -->
+  <div class="notes" aria-hidden="true" id="notes"></div>
+
+  <main class="wrap">
+    <article class="card" role="region" aria-label="Solicitud musical">
+
+      <h1>PUEDE CANTAR FUENTES DE ORTIZ OTRA VEZ POR FAVOR</h1>
+      
+      <p class="script">🎶 "Fuentes de Ortiz" otra vez… por fa 🎶</p>
+
+
+    </article>
+  </main>
+
+  <!-- Confetti container -->
+  <div class="confetti" id="confetti" aria-hidden="true"></div>
+
+  <footer>Hecho con <span aria-hidden="true">💛</span> para pedir esa canción especial.</footer>
+
+  <script>
+    // Generate floating music notes
+    (function makeNotes(){
+      const icons = ["♪","♫","♩","♬","♭","𝅘𝅥𝅮"]; // variety of glyphs
+      const container = document.getElementById('notes');
+      const count = 26;
+      for(let i=0;i<count;i++){
+        const s = document.createElement('div');
+        s.className = 'note';
+        s.textContent = icons[Math.floor(Math.random()*icons.length)];
+        s.style.left = Math.random()*100 + 'vw';
+        s.style.setProperty('--dur', (10 + Math.random()*14) + 's');
+        s.style.setProperty('--delay', (Math.random()*-20)+'s');
+        s.style.setProperty('--x', (Math.random()*60-30)+'px');
+        container.appendChild(s);
+      }
+    })();
+
+    // Confetti burst on button click
+    const btn = document.getElementById('celebrate');
+    const confetti = document.getElementById('confetti');
+
+    btn.addEventListener('click', () => {
+      const pieces = 70;
+      for(let i=0;i<pieces;i++){
+        const span = document.createElement('span');
+        const size = 6 + Math.random()*10;
+        span.style.width = size + 'px';
+        span.style.height = (size*1.4) + 'px';
+        span.style.left = Math.random()*100 + 'vw';
+        span.style.top = -10 + Math.random()*10 + 'vh';
+        span.style.setProperty('--d', (2.2 + Math.random()*2.4) + 's');
+        span.style.setProperty('--dl', (Math.random()*0.8) + 's');
+        // random pastel color
+        const hue = Math.floor(Math.random()*360);
+        span.style.background = `hsl(${hue} 90% 75%)`;
+        span.style.transform = `translateY(-120vh) rotate(${Math.random()*360}deg)`;
+        confetti.appendChild(span);
+        setTimeout(()=> span.remove(), 5000);
+      }
+    });
+  </script>
+</body>
+</html>
